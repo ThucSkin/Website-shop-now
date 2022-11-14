@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+th:replace="~{/layout/fragment :: dynamic(~{::main})}">
+<html>
+
+<body class="container"> 
+    <main th:fragment="shopping_cart">
+        <header class="row">
+            <h2 class="alert alert-success title-view " >Giỏ hàng của bạn</h2>
+        </header>
+        <div class="container"> 
+            <a th:href="@{/product/list}" class="btn btn-warning mb-1"><i class="fa fa-angle-left"></i> Tiếp tục mua hàng</a>
+            <button ng-click="cart.clear()" class="btn btn-danger ml-2 mb-1">
+                        <i class="fa-regular fa-calendar-xmark"></i> Clear
+            </button>
+            <table class="table table-hover table-condensed"> 
+                <thead> 
+                    <tr> 
+                        <th style="width:10%">Mã sản phẩm</th> 
+                    <th style="width:30%">Tên sản phẩm</th> 
+                    <th style="width:15%">Giá</th> 
+                    <th style="width:15%">Giảm</th> 
+                    <th style="width:10%">Số lượng</th> 
+                    <th style="width:20%">Thành tiền</th> 
+                    <th style="width:10%"></th> 
+                    </tr> 
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in cart.items" >
+                        <td>{{item.productId}}</a></td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.unitPrice | number : 0}}đ</td>
+                        <td>{{item.discount | number : 0}}đ</td>
+                        <td><input ng-change="cart.saveToLocalStorage()" ng-model="item.qty" type="number" min="1" style="width: 60px;"></td>
+                        <td>{{item.qty*(item.unitPrice-item.discount) | number : 0}} VND</td>                   
+                        <td>
+                            <button ng-click="cart.remove(item.productId)" class="btn btn-sm btn-danger">
+                            <i class="fa-regular fa-trash-can"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table> 
+            <div class="row">  
+                <div class="col-sm-9">
+                    <div><a th:href="@{/order/checkout}" class="btn btn-primary">
+                        <i class="fa-regular fa-calendar-check"></i> Xác nhận đặt hàng</a>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    Tổng tiền: <span class="badge badge-danger">{{cart.amount | number : 0}} VND</span>
+                </div>
+            </div>
+            
+        </div> 
+    </main>
+</body>
+</html>

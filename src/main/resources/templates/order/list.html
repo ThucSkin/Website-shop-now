@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+th:replace="~{/layout/fragment :: dynamic(~{::main})}">
+
+<body>
+    <main class="container">
+        <div class="card card">
+            <div class="card-header">LỊCH SỬ ĐẶT HÀNG</div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Mã đơn hàng</th>
+                        <th>Ngày đặt hàng</th>                       
+                        <th>Số điện thoại</th>
+                        <th>Địa chỉ nhận hàng</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each=" order,state: ${orders}">
+                        <td>[[${state.index}]]</td>             
+                        <th>[[${order.orderId}]]</th>
+                        <th>[[${order.createDay}]]</th>
+                        <th>[[${order.telePhone}]]</th>
+                        <th>[[${order.address}]]</th>
+                        
+                        <th>
+                            <a th:href="@{|/order/detail/${order.orderId}|}" class="btn btn-default">
+                                <i class="fa-solid fa-magnifying-glass-plus"></i>
+                            </a>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center mb-3">
+                <button ng-click="pager.first()" class="btn btn-danger">
+                    <b class="glyphicon glyphicon-hand-up"></b>
+                </button>
+                <button ng-click="pager.prev()" class="btn btn-primary">
+                    <b class="glyphicon glyphicon-hand-left"></b>
+                </button>
+                <button class="btn btn-success">{{pager.page + 1}} of {{pager.count}}</button>
+                <button ng-click="pager.next()" class="btn btn-primary">
+                    <b class="glyphicon glyphicon-hand-right"></b>
+                </button>
+                <button ng-click="pager.last()" class="btn btn-danger">
+                    <b class="glyphicon glyphicon-hand-down"></b>
+                </button>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

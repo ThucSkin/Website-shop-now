@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+th:replace="~{/layout/fragment :: dynamic(~{::main})}">
+<html>
+
+<body>
+    <main role="main">
+        <div class="container">
+            <form>
+                <div class="text-center">
+                    <h2 class="alert alert-success">Thông tin khách hàng</h2>
+                    <p class="lead">Vui lòng kiểm tra thông tin trước khi đặt hàng!</p>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 order-md-2 mb-4">
+                        <h4 class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="mb-3"><i class="fa-solid fa-credit-card"></i> Hình thức thanh toán</h4>
+                            <div class="d-block my-3">
+                                <div class="custom-control custom-radio">
+                                    <input id="httt-1" name="httt_ma" type="radio" class="custom-control-input" required=""
+                                        value="1">
+                                    <label class="custom-control-label" for="httt-1">Tiền mặt</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input id="httt-2" name="httt_ma" type="radio" class="custom-control-input" required=""
+                                        value="2">
+                                    <label class="custom-control-label" for="httt-2">Chuyển khoản</label>
+                                </div>
+                            </div>
+                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div>
+                                    <h6 class="my-0"><i class="fa-solid fa-truck-arrow-right"></i> Chi phí vận chuyển:</h6>
+                                </div>
+                                <span class="">30.000đ</span>
+                            </li>
+                            <div class="am mt-4">
+								<span><i class="fa-solid fa-coins"></i> Tổng tiền thanh toán:</span>
+								<button class="vnd">{{cart.amount + 30000 | number : 0 }} VND</button>
+                            </div>
+                        </ul>
+                        
+                        <div class="cart_sub mt-4">
+                            <button class="order" ng-click="order.purchase()">Hoàn tất đặt hàng</button>
+                        </div>
+                    </div>
+                    <div class="col-md-8 order-md-1">
+                        <h4 class="mb-3"><i class="fa-solid fa-file-signature"></i> Thông tin khách hàng</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="kh_ten"><i class="fa-solid fa-pen-nib"></i> Họ tên</label>
+                                <div class="form-control" id="username">[[${#request.remoteUser}]]</div>                       
+                            </div>
+                            <div class="col-md-6">
+                                <label><i class="fa-solid fa-calendar-days"></i> Ngày đặt hàng:</label>
+                                <div class="form-control">{{order.createDay | date:'dd-MM-yyyy'}}</div>
+                            </div>
+                            <div class="col-md-4">
+                                <label><i class="fa-solid fa-phone"></i> Số điện thoại:</label>
+                                <input ng-model="order.telePhone" type="text" class="form-control">
+                            </div>
+                            <div class="col-md-12">
+                                <div><i class="fa-solid fa-location-dot"></i> Địa chỉ giao hàng:</div>
+                                <textarea ng-model="order.address" class="form-control"></textarea>
+                            </div>
+                        </div>                       
+                    </div>
+                </div>                                                
+                    <div class="container"> 
+                        <table class="table table-hover table-condensed"> 
+                            <thead> 
+                                <tr> 
+                                <th style="width:10%">Mã sản phẩm</th> 
+                                <th style="width:30%">Tên sản phẩm</th> 
+                                <th style="width:15%">Giá</th> 
+                                <th style="width:15%">Giảm</th> 
+                                <th style="width:10%">Số lượng</th> 
+                                <th style="width:30%">Thành tiền</th> 
+                                <th style="width:10%"> </th> 
+                                </tr> 
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in cart.items" >
+                                <td>{{item.productId}}</a></td>
+                                <td>{{item.name}}</td>
+                                <td>{{item.unitPrice | number : 0}}đ</td>
+                                <td>{{item.discount | number : 0}}đ</td>
+                                <td><input ng-change="cart.saveToLocalStorage()" ng-model="item.qty" type="number" min="1" style="width: 60px;"></td>
+                                <td>{{item.qty*(item.unitPrice-item.discount) | number : 0}}đ</td>
+                                <td>
+                                <button ng-click="cart.remove(item.productId)" class="btn btn-sm btn-danger">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </button>
+                                </td>
+                            </tr>
+                            </tbody>         
+                        </table> 
+                        <div class="total">
+                            Tổng tiền: <span class="badge badge-danger">{{cart.amount | number : 0}} VND</span>
+                        </div>
+                    </div> 
+            </form>
+
+        </div>
+    </main>
+</body>
+
+</html>

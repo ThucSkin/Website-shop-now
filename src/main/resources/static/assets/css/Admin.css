@@ -1,0 +1,46 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+.row{
+    margin-top: 3px;
+}
+.small-img{
+    margin-right: 2px;
+    max-width:100%; 
+    height:120px;
+}
+.big-img{
+    width:100%;
+    height: 270px; 
+    display: flex;
+    justify-content: center;
+    align-items: center ;  
+    position: relative; 
+}
+.img{
+    border: 2px solid yellowgreen;
+}
+.i{
+    border-top: 1px solid yellowgreen ;
+}
+.t{
+    float: right;
+}
+.item{
+    font-weight: bold;
+    
+}
+.card .card-header{
+    text-align: center;
+    font-weight: bold;
+    color: blue;
+    font-style: inherit;
+}
+.banner{
+	width: 1116px;
+	height: 300px;
+	
+	padding-left: 15px;
+	
+}

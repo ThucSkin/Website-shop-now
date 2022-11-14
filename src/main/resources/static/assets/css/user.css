@@ -1,0 +1,19 @@
+body {
+    background: white
+}
+
+
+.form-control{
+    width: 493px;
+}
+
+
+.labels {
+    font-size: 11px
+    
+}
+
+
+.custom {
+    width: 236px!important;
+}

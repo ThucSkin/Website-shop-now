@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    th:replace="~{/layout/fragment :: dynamic(~{::main})}">
+
+    <body>
+        <main th:object="${item}" class="container-fluid" >
+            <div class="row"> 
+                <div class="col-sm-4"></div>		
+                Loại hàng: [(*{category.name})]. 	
+            </div>
+            <div class="row" >
+                <article class="col-sm-9">
+                    <div class="row poly-cart">
+                        <div class="col-sm-5 img-detail">
+                            <img class="img-1" th:src="@{|/assets/images/*{image1}|}">
+                            <div class="row mt-4">
+                                <div class="col-sm-4">
+                                    <img  style="height: 100px; width: 100px;" src="/assets/images/noimage.jpg">
+                                </div>
+                                <div class="col-sm-4">
+                                    <img  style="height: 100px; width: 100px;" src="/assets/images/noimage.jpg"> 
+                                </div>
+                                <div class="col-sm-4">
+                                    <img  style="height: 100px; width: 100px;" src="/assets/images/noimage.jpg">
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="col-sm-7">
+                            <fieldset style="line-height: 30px;">
+                                <legend>Tên sản phẩm: [(*{name})].</legend>
+                                <li class="price">[('Giá:' +' '+ *{unitPrice} )]đ</li>
+                                <li class="discount">[('Giảm:' +' '+  *{discount})]đ</li>
+                                <li>số lượng đã bán: [[*{quantity}]]</li>
+                                <li><span class="badge badge-danger">Mô tả: </li> 
+                                    <div class="discription">
+                                        [(*{discription})] 
+                                    </div>                               		                                            
+                                <div class="form-group">
+                                    <li><label for="exampleFormControlTextarea1">Đánh giá:</label></li>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    <div class="bot mt-4">
+                                        <a th:href="@{/product/list}" class="btn btn-warning mr-3">
+                                            <i class="fa fa-angle-left"></i> Tiếp tục mua hàng
+                                        </a>
+                                        <button th:attr="ng-click=@{|cart.add(${item.productId})|}"
+                                            class="btn btn-success">
+                                            <i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng
+                                        </button>
+                                    </div>
+                                </div>                        
+                            </fieldset>
+                        </div>                       
+                    </div>   
+                </article>
+                <aside class="col-sm-3" >
+                    <div class="card poly-cart " data-toggle="collapse" href="#chungloai">
+                        <div class="card-header" style="cursor: pointer;">
+                            <span class="glyphicon glyphicon-th-list"></span>Mặt hàng cùng loại:
+                        </div>                       
+                            <ul class="list-group card-collapse" id="chungloai">
+                                <li class="list-group-item " th:each=" item:*{category.products}">
+                                    <a th:href="@{|/product/detail/${item.productId}|}" th:text="${item.name}"></a>
+                                </li>
+                            </ul>                       
+                    </div>
+                </aside>               
+            </div>
+        </main>
+</body>
+</html>
+

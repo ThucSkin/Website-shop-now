@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="dynamic(main)">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/assets/css/index.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<!--  Angular -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<title>Shop-Now</title>
+</head>
+
+<body class="container-fluid" ng-app="shopping-cart-app"
+	ng-controller="shopping-cart-ctrl">
+	<div class="row">
+		<div class="col-sm-12">
+			<img class="banner1"
+				src="/assets/images/Ảnh chụp màn hình 2022-10-04 233842.jpg"
+				alt="">
+		</div>
+	</div>
+	<nav class="col-sm-12">
+		<ul>
+			<li><a th:href="@{/}"><img class="imgHome"
+					src="/assets/images/logo2.jpg" alt=""></a></li>
+			<li>
+				<form th:action="@{/product/search}">
+					<input type="text" name="name" id="name" aria-describedby="helpId"
+						placeholder="Bạn tìm gì...">
+					<button>
+						<i class="fa fa-search"></i>
+					</button>
+				</form>
+			</li>
+			<a th:href="@{/cart/view}"><li><i
+					class="fas fa-shopping-cart cart"></i> Giỏ hàng({{cart.count}} Sản
+					phẩm)</li></a>
+			<th:block th:if="${#request.remoteUser}">
+				<a th:href="@{/order/list}">Lịch sử <br> đơn hàng
+				</a>
+			</th:block>
+
+			<li><a th:href="@{/help}">Hỏi đáp</a></li>
+			<li class="nav-item dropdown navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+				<a class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
+				role="button" data-bs-toggle="dropdown" aria-expanded="false">Ngôn
+					ngữ</a>
+				<ul class="dropdown-menu dropdown-menu-end"
+					aria-labelledby="navbarDropdown">
+					<li><a class="dropdown-item" href="#!">English</a></li>
+					<li><a class="dropdown-item" href="#!">Việt Nam</a></li>
+				</ul>
+			</li>
+			<li
+				th:if="${#request.isUserInRole('DIRE') or #request.isUserInRole('STAF')}">
+				<a th:href="@{/admin}">Admin Home</a>
+			</li>
+			<th:block th:unless="${#request.remoteUser}">
+				<li class="nav-item"><a class="nav-link item"
+					th:href="@{/security/register}"> <i
+						class="fa-solid fa-earth-americas"></i> Đăng kí
+				</a></li>
+			</th:block>
+			<th:block th:unless="${#request.remoteUser}">
+				<li class="nav-item"><a class="nav-link item"
+					th:href="@{/security/login/form}"> <i
+						class="fa-solid fa-earth-americas"></i> Đăng nhập
+				</a></li>
+			</th:block>
+			<th:block th:if="${#request.remoteUser}">
+				<li
+					class="nav-item dropdown navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+					<a class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
+					role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						<i class="fas fa-user fa-fw"></i> [[${#request.remoteUser}]]
+				</a>
+					<ul class="dropdown-menu dropdown-menu-end"
+						aria-labelledby="navbarDropdown">
+						<li><a class="dropdown-item" href="#!">Cài đặt</a></li>
+						<li><a class="dropdown-item" th:href="@{/security/change}">Thông
+								tin cá nhân</a></li>
+						<li><a class="dropdown-item"
+							th:href="@{/security/forgotPassword}">Quên mật khẩu</a></li>
+						<li><hr class="dropdown-divider" /></li>
+						<li><a class="dropdown-item" th:href="@{/security/logoff}">Đăng
+								xuất</a></li>
+					</ul>
+				</li>
+			</th:block>
+		</ul>
+	</nav>
+	<section class="menu-bar">
+		<div class="container">
+			<div class="menu-bar-content">
+				<ul>
+					<li><a href="/product/list?cid=2"><i
+							class="fa-solid fa-mobile-screen-button"></i> Điện thoại</a></li>
+					<li><a href="/product/list?cid=3"><i
+							class="fa-solid fa-laptop"></i> Laptop</a></li>
+					<li><a href="/product/list?cid=4"><i
+							class="fa-solid fa-tablet-screen-button"></i> Ipad</a></li>
+					<li><a href="/product/list?cid=5"><i
+							class="fa-regular fa-clock"></i> Đồng hồ</a></li>
+					<li><a href="/product/list?cid=2005"><i
+							class="fa-solid fa-tv"></i> Máy tính bàn</a></li>
+					<li><a href="/product/list?cid=8"> Phụ kiện</a></li>
+				</ul>
+			</div>
+		</div>
+	</section>
+
+	<div class="row">
+		<div class="col-sm-8">
+			<img src="/assets/images/bannerSale.png" alt="" class="n">
+		</div>
+		<div class="col-sm-4">
+			<img src="/assets/images/banner3.png" alt="" class="m mb-3"> <img
+				src="/assets/images/bannerSale22.png" alt="" class="m">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+			<img class="imgSale" src="/assets/images/bannerSale1.png" alt="">
+		</div>
+		<div class="col-sm-4">
+			<img class="imgSale" src="/assets/images/bannerSale2.png" alt="">
+		</div>
+		<div class="col-sm-4">
+			<img class="imgSale" src="/assets/images/bannerSale3.png" alt="">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col ml-5 mt-5">
+			<img class="hotsale" src="/assets/images/hot-icon.gif" alt="">
+			<p class="km">khuyến mãi hot!</p>
+		</div>
+	</div>
+
+	<br>
+	<br>
+	<!--           main             -->
+	<div class="row">
+		<div class="col">
+			<div th:replace="${main}"></div>
+		</div>
+	</div>
+	<hr>
+	<hr>
+	<footer>
+		<div>
+			<h2 class="shopee-footer-section__heading">
+				<span style="font-size: 12px"><span
+					style="font-family: Roboto, sans-serif"><span
+						style="color: #000000"><b>MUA SẮM VÀ BÁN HÀNG ONLINE
+								ĐƠN GIẢN, NHANH CHÓNG VÀ AN TOÀN</b></span></span></span>
+			</h2>
+			<p class="shopee-footer-section__content">
+				<span style="font-size: 12px"><span
+					style="font-family: Roboto, sans-serif"><span
+						style="color: #000000">Nếu bạn đang tìm kiếm một trang web
+							để mua và bán hàng trực tuyến thì Shopnow.vn là một sự lựa chọn
+							tuyệt vời dành cho bạn. Bản chất của Shop now là một social
+							E-commerce platform - nền tảng trang web <b>thương mại điện
+								tử</b> tích hợp mạng xã hội. Điều này cho phép người mua và người
+							bán hàng dễ dàng tương tác, trao đổi thông tin về sản phẩm và
+							chương trình khuyến mãi của shop. Nhờ nền tảng đó, việc mua bán
+							trên Shopnow trở nên nhanh chóng và đơn giản hơn. Bạn có thể trò
+							chuyện trực tiếp với nhà bán hàng để hỏi trực tiếp về mặt hàng
+							cần mua. Còn nếu bạn muốn tìm mua những dòng sản phẩm chính hãng,
+							uy tín,
+					</span></span><u><a style="color: inherit" href="https://shopee.vn/mall/"><span
+							style="font-family: Roboto, sans-serif"><b><u>Shopnow
+										Mall</u></b></span></a></u><span style="font-family: Roboto, sans-serif"><span
+						style="color: #000000"> chính là sự lựa chọn lí tưởng dành
+							cho bạn. Để bạn có thể dễ dàng khi tìm hiểu và sử dụng sản phẩm,
+					</span></span><u><a style="color: inherit" href="http://shopee.vn/blog/"><span
+							style="font-family: Roboto, sans-serif"><b><u>Shop
+										now Blog</u></b></span></a></u><span style="font-family: Roboto, sans-serif"><u><a
+							style="color: inherit" href="http://shopee.vn/blog/"> - <b>trang
+									blog thông tin chính thức của Shop now</b></a></u><span
+						style="color: #000000"> - sẽ giúp bạn có thể tìm được cho
+							mình các kiến thức về xu hướng thời trang, review công nghệ, mẹo
+							làm đẹp, tin tức tiêu dùng và deal giá tốt bất ngờ.</span></span></span>
+			</p>
+			<div class="lzd-footer-width-25" data-spm="sns">
+				<div>
+					<h4 class="lzd-footer-title">Kết nối với chúng tôi</h4>
+					<i><img src="/assets/images/lhvct.jpg" alt=""></i>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+	<!-- Icon  -->
+	<script src="/assets/js/all.min.js"></script>
+	<script src="/assets/js/shopping-cart-app.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+		crossorigin="anonymous"></script>
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"
+		crossorigin="anonymous"></script>
+	<script src="/assets/js/demo/chart-area-demo.js"></script>
+	<script src="/assets/js/demo/chart-bar-demo.js"></script>
+	<script src="/assets/js/demo/chart-pie-demo.js"></script>
+	<script src="/assets/js/demo/datatables-demo.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest"
+		crossorigin="anonymous"></script>
+	<script src="/assets/js/datatables-simple-demo.js"></script>
+</body>
+
+</html>

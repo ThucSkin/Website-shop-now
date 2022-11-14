@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+th:replace="~{/layout/fragment :: dynamic(~{::main})}">
+
+<body >
+        <main th:object="${order}" class="container">
+            <div class="panel panel-primary">
+                <div class="panel-heading">CHI TIẾT ĐƠN HÀNG</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group col-sm-4">
+                            <div>Mã đơn hàng:</div>
+                            <input th:field="*{orderId}" class="form-control" readonly>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <div>Họ tên:</div>
+                            <input th:field="*{account.username}" class="form-control" readonly>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <div>Ngày đặt:</div>
+                            <input th:field="*{createDay}" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            <div>Địa chỉ giao hàng:</div>
+                            <textarea th:field="*{address}" class="form-control" readonly></textarea>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <div>Điện thoại:</div>
+                            <textarea th:field="*{telePhone}" class="form-control" readonly></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel panel-primary">
+                <div class="panel-heading">Danh sách sản phẩm</div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Mã sản phẩm</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Giá</th>
+                            <th>Giảm</th>
+                            <th>Số lượng</th>
+                            <th>Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="detail: *{orderDetails}" th:object="${detail}">
+                            <td>[[*{product.productId}]]</td>
+                            <td>[[*{product.name}]]</td>
+                            <td>[[*{price}]]</td>
+                            <td>[[*{discount}]]</td>
+                            <td>[[*{quantity}]]</td>
+                            <td>[[*{(price - discount) * quantity}]] VND</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+</body>
+</html>

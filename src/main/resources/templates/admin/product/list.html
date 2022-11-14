@@ -1,0 +1,97 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" 
+    th:replace="~{/admin/dist/fragment :: dynamic(~{::main})}">
+  
+  <body>
+    <main>
+      <div class="container-fluid px-4">
+        <div class="card mb-4">
+           <div class="card-header card bg-secondary text-white"
+				style="text-align: center">
+				<h3>Danh sách sản phẩm</h3>
+			</div>
+        <div class="card-body">
+            <div th:if="${message != null}" class="alert alert-primary"
+                  role="alert"> 
+                <i>[[${message}]]</i>
+            </div>
+            <table id="datatablesSimple">
+              <thead class="bg-light ">
+                <tr>
+                  <th>Mã sản phẩm</th>
+                  <th>Tên sản phẩm</th>
+                  <th>Số lượng</th>
+                  <th>Giá</th>
+                  <th>Giảm giá</th>
+                  <th>Ngày nhập</th>
+                  <th>Hình ảnh</th>
+                  <th>Tên loại</th>
+                  <th></th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr th:each="item: ${products}">
+                <td th:utext="${item.productId}"></td>
+                <td th:utext="${item.name}"></td>
+                <td th:utext="${item.quantity}"></td>
+                <td th:utext="${item.unitPrice}"></td>
+                <td th:utext="${item.discount}"></td>
+                <td th:utext="${item.EnteredDay}"></td>
+                <td th:utext="${item.image1}"></td>
+                <td th:utext="${item.category.name}"></td>
+                <td>
+                  <div class="btn-group btn-group-xs">
+                    <a class="btn btn-warning mr-2"
+                      th:href="@{'/admin/product/edit/' + ${item.productId}}">
+                      <i class="fa-regular fa-pen-to-square"></i>
+                    </a> 
+                    <a class="btn btn-danger" th:data-id="${item.productId}"
+                      th:data-name="${item.name}"
+                      onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))">
+                      <i class="fa-solid fa-trash-can"></i>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            		<script>
+						function showConfirmModalDialog(id, name) {
+							$('#productName').text(name);
+							$('#yesOption').attr('href',
+									'/admin/product/delete/' + id);
+							$('#noOption').attr('href', '/admin/product');
+							$('#confirmationId').modal('show');
+						}
+					</script>
+					<div class="modal fade" id="confirmationId" tabindex="-1"
+						role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">Xác nhận</h5>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									Bạn có muốn xóa "<span id="productName"></span>"?
+								</div>
+								<div class="modal-footer">
+									<a id="yesOption" type="button" 
+										class="btn btn-danger">Đồng ý
+									</a>
+									<a id="noOption" type="button" class="btn btn-success"
+										data-dismiss="modal">Hủy
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+</body>
+</html>

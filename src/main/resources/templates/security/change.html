@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    <link rel="stylesheet" href="/src/main/resources/static/assets/css/user.css" />
+</head>
+
+<body>
+    <div class="container rounded bg-white mt-5 mb-5 border-0 shadow rounded-3 overflow-hidden">
+        <div class="row">
+            <div class="col-md-4 mx-auto ">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5"
+                        width="150px">
+                    <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png"
+                        class="avatar img-circle img-thumbnail rounded-circle" alt="avatar">
+                    <h6>Hình ảnh</h6>
+                    <input type="file" class="text-center center-block file-upload">
+                </div>
+            </div>
+            <div class="col-md-6  mx-auto ">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Cài đặt tài khoản chung</h4>
+                    </div>
+
+                    <div class="row mt-3">
+
+                        <form>
+
+                            <div class="form-floating mb-3">
+                                <label for="floatingInputUsername">Họ và Tên</label>
+                                <input type="text" class="form-control" id="floatingInputUsername"
+                                    placeholder="Fullname" required autofocus>
+
+                            </div>
+
+                            <div class="form-floating mb-3"><label for="floatingInputPhonenumber">Số điện thoại</label>
+                                <input type="text" class="form-control" id="floatingInputPhonenumber"
+                                    placeholder="Phone number" required>
+
+                            </div>
+
+                            <div class="form-floating mb-3"><label for="floatingInputEmail">Email</label>
+                                <input type="email" class="form-control" id="floatingInputEmail"
+                                    placeholder="you@gmail.com" required>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="gender">Giới tính</label>
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input type="radio" name="gender" id="male" value="male"
+                                            class="form-check-input" checked>
+                                        <label for="male" class="form-check-label">Nam</label>
+                                    </div>
+
+                                    <div class="form-check form-check-inline">
+                                        <input type="radio" name="gender" id="female" value="female"
+                                            class="form-check-input">
+                                        <label for="female" class="form-check-label">Nữ</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3"><label for="floatingInputAddress">Địa chỉ</label>
+                                <input type="text" class="form-control" id="floatingInputAddress" placeholder="Địa chỉ"
+                                    required>
+
+                            </div>
+
+
+
+                            <div>
+                                <div class="  mb-2 form-check-inline ">
+                                    <button
+                                        class="btn btn-lg btn-warning custom btn-block btn-edit  fw-bold text-uppercase my-2"
+                                        type="submit">Chỉnh sửa</button>
+
+                                </div>
+                                <div class="d-grid mb-10 form-check-inline  ">
+                                    <button
+                                        class="btn btn-lg btn-danger btn-save btn-block custom fw-bold text-uppercase my-2 "
+                                        type="submit">Lưu thay đổi</button>
+
+                                </div>
+                            </div>
+
+
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,170 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" 
+    th:replace="~{/admin/dist/fragment :: dynamic(~{::main})}">
+
+    <body>
+       <main>
+		<form action="/admin/product/saveOrUpdate" method="post"
+			enctype="multipart/form-data" th:object="${product}">
+			<div class="card">
+				<div class="card-header card bg-secondary text-white"
+					style="text-align: center">
+					<h2
+						th:text="${product.isEdit ? 'Cập nhật sản phẩm' : 'Thêm mới sản phẩm'}">
+						Thêm mới sản phẩm</h2>
+				</div>
+				<div class="card-body">
+					<div class="row">
+					<input type="hidden" th:field="*{isEdit}">
+						<div class="col-sm-4 img">
+							<div class="row">
+								<img id="image1"
+									th:src="${product.image1 != null? '/admin/product/images/' + product.image1 : '/assets/images/noimage.jpg'}"
+									src="/assets/images/noimage.jpg" class="big-img" alt="">
+							</div>
+							<div class="row i">
+								<div class="col-sm-4 mt-2">
+									<label for="image"> <img
+										src="/assets/images/noimage.jpg" class="small-img">
+									</label>
+								</div>
+								<div class="col-sm-4 mt-2">
+									<label for="image"> <img
+										src="/assets/images/noimage.jpg" class="small-img">
+									</label>
+								</div>
+								<div class="col-sm-4 mt-2">
+									<label for="image"> <img
+										src="/assets/images/noimage.jpg" class="small-img">
+									</label>
+								</div>
+							</div>
+							<div class="col-sm-10">
+								<script>
+									function chooseFile(fileInput) {
+										if (fileInput.files
+												&& fileInput.files[0]) {
+											var reader = new FileReader();
+											reader.onload = function(e) {
+												$('#image1').attr('src',
+														e.target.result);
+											}
+											reader
+													.readAsDataURL(fileInput.files[0]);
+										}
+									}
+								</script>
+								<input type="file" name="image1File" style="height: 45px"
+									onchange="chooseFile(this)" placeholder="Product Image"
+									aria-describedby="productImageHid"
+									class="form-control mt-2 choose-img" id="productImage">
+							</div>
+						</div>
+						<div class="col-sm-8 ses ">
+							<div class="row">
+								<div class="form-group col-sm-6">
+									<label for="productId">Mã sản phẩm: </label> <input type="text"
+										readonly="readonly" class="form-control" name="productId"
+										id="productId" th:field="*{productId}"
+										aria-describedby="productIdHid" placeholder="Product ID">
+								</div>
+								<div class="form-group col-sm-6">
+									<div>Giá</div>
+									<input th:field="*{unitPrice}" type="number" name="price" min="0"
+										placeholder="Unit Price" class="form-control mt-2">
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col-sm-6">
+									<div>Tên sản phẩm</div>
+									<input th:field="*{name}" type="text" name="name"
+										placeholder="Name" class="form-control mt-2">
+								</div>
+								<div class="form-group col-sm-6">
+									<label for="categoryId">Loại hàng</label> 
+										<select	class="form-control" name="categoryId" id="categoryId"
+											th:field="*{categoryId}">
+											<option th:each="item : ${categories}"
+											th:value="${item.categoryId}" th:text="${item.name}"
+											th:selected="${item.categoryId == product.categoryId}">Loại hàng</option>
+										</select>
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col-sm-6 ">
+									<div>Ngày tạo</div>
+									<input th:field="*{enteredDay}" type="date" name="enteredDay"
+										class="form-control mt-2">
+								</div>
+								<div class="form-group col-sm-3">
+									<div>Số lượng</div>
+									<input th:field="*{quantity}" type="number" min="1"
+										style="width: 100%;" placeholder="0" class="form-control mt-2"></input>
+								</div>
+								<div class="form-group col-sm-3">
+									<div>Giảm giá</div>
+									<input th:field="*{discount}" type="number" min="0"
+										placeholder="Discount" style="width: 100%;"
+										class="form-control mt-2">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<div>Mô tả</div>
+									<textarea th:field="*{discription}" placeholder="Description"
+										style="height: 190px" class="mt-2 form-control description"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer text-center mt-5">
+					<button class="btn btn-primary mr-3" th:text="${product.isEdit? 'Cập nhật':'Lưu'}">
+						Lưu <i class="fa-solid fa-plus"></i>
+					</button>
+					<a th:href="@{/admin/product}" class="btn btn-success mr-2">Danh sách sản phẩm</a>
+					<a class="btn btn-danger mr-2" th:if="${product.isEdit}"
+						th:data-id="${product.productId}" th:data-name="${product.name}"
+						onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))">
+						Xóa <i class="fa-regular fa-trash-can"></i>
+					</a> <a th:href="@{/admin/product/add}" class="btn btn-info mr-3">
+						Làm mới <i class="fa-regular fa-window-restore"></i>
+					</a>
+				</div>
+				<script>
+				function showConfirmModalDialog(id, name) {
+					$('#username').text(name);
+					$('#yesOption')
+							.attr('href', '/admin/product/delete/' + id);
+					$('#noOption').attr('href', '/admin/product/edit/' + id);
+					$('#confirmationId').modal('show');
+				}
+			</script>
+			<div class="modal fade" id="confirmationId" tabindex="-1"
+				role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Xác nhận</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							Bạn có muốn xóa "<span id="username"></span>"?
+						</div>
+						<div class="modal-footer">
+							<a id="yesOption" type="button" class="btn btn-danger">Đồng ý</a>
+							<a id="noOption" type="button" class="btn btn-secondary"
+								data-dismiss="modal">Hủy</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+		</form>
+	</main>
+        
+    </body>
+</html>
